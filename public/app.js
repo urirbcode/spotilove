@@ -64,6 +64,7 @@ window.onclick = function(event) {
 document.getElementById('addSongForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     const songUrl = document.getElementById('songUrl').value;
+    const songIframe = generateSpotifyIframe(songUrl)
     const songTitle = document.getElementById('songTitle').value;
     const songDescription = document.getElementById('songDescription').value;
 
@@ -73,7 +74,7 @@ document.getElementById('addSongForm').addEventListener('submit', async function
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title: songTitle, description: songDescription, iframe: songUrl })
+            body: JSON.stringify({ title: songTitle, description: songDescription, iframe: songIframe, link: songUrl })
         });
 
         if (response.ok) {
@@ -87,3 +88,17 @@ document.getElementById('addSongForm').addEventListener('submit', async function
         // Display error message to the user
     }
 });
+
+// This function turns any spotify link into the iframe. We store the iframe, but we collect the link.
+function generateSpotifyIframe(url) {
+    // Check if the URL is a valid Spotify track link
+    if (!url.includes("spotify.com/track/")) {
+        return 'Invalid Spotify URL';
+    }
+
+    // Construct the embed URL by inserting '/embed' into the path
+    const embedUrl = url.replace("/track/", "/embed/track/");
+
+    // Create the iframe HTML using a template literal
+    return `<iframe style="border-radius:12px" src="${embedUrl}" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+}

@@ -1,0 +1,312 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 300;
+    background-color: #121212;
+    color: #ffffff;
+    line-height: 1.4; /* Adjust the value as needed */
+}
+
+h1 {
+    font-family: 'PlusJakartaSans', sans-serif;
+}
+
+.intro {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+.intro p {
+    font-size: 0.8rem;
+}
+
+
+.subtitle {
+    text-align: right;
+    margin-top: -1rem;
+}
+
+.play_on_spotify {
+    border-radius: 12px;
+    width: 30%;
+    max-width: 300px;
+    min-width: 100px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.song {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #b3b3b321 ;
+}
+
+.song iframe {
+    margin-right: 20px;
+    max-width: 300px;
+}
+
+.song_description {
+    color: #b3b3b3;
+}
+
+.date {
+    display: block;
+    margin-top: 10px;
+    color: #e5e5e5; /* Lighter color */
+    font-size: 0.9em; /* Smaller font size */
+}
+
+.song_title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color:#e5e5e5
+}
+
+#addSongButton {
+    background-color: #1DB954;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#addSongButton:hover {
+    background-color: #1ed760;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .song {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .song iframe {
+        margin-bottom: 20px;
+    }
+}
+
+/* Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Maximum width */
+    border-radius: 10px; /* Rounds the corners of the modal content */
+}
+
+/* The Close Button */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+#h2form {
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 800;
+    color: #121212;
+    text-align: center;
+}
+/* Labels and Inputs */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 400;
+    color: #121212;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Make sure padding does not affect overall width */
+}
+
+button[type="submit"] {
+    width: 100%;
+    background-color: #1DB954;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+
+
+@font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-ExtraBold.ttf') format('truetype');
+    font-weight: 800; /* ExtraBold */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800; /* ExtraBold */
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-ExtraLight.ttf') format('truetype');
+    font-weight: 200; /* ExtraLight */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200; /* ExtraLight */
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-Light.ttf') format('truetype');
+    font-weight: 300; /* Light */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-LightItalic.ttf') format('truetype');
+    font-weight: 300; /* Light */
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-Medium.ttf') format('truetype');
+    font-weight: 500; /* Medium */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-MediumItalic.ttf') format('truetype');
+    font-weight: 500; /* Medium */
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-SemiBold.ttf') format('truetype');
+    font-weight: 600; /* SemiBold */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('fonts/PlusJakartaSans-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600; /* SemiBold */
+    font-style: italic;
+  }
+  

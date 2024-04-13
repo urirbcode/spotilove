@@ -1,58 +1,66 @@
-const db = require('../models/db')
+const db = require('../models/db'); // Import the database connection
 
-exports.getSongs = function(req,res){
-    db.Song.find()
-    .then(function(songs){
-        res.json(songs);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
+exports.getSongs = function(req, res) {
+    db.all('SELECT * FROM songs', (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(rows);
+        }
+    });
 };
 
-exports.addSong = function(req,res){
-    db.Song.create(req.body)
-    .then(function(newSong){
-        res.status(201).json(newSong)
-    })
-    .catch(function(err){
-        res.send(err);
-    })
+exports.addSong = function(req, res) {
+    const { title, description, iframe } = req.body;
+    const sql = 'INSERT INTO songs (title, description, iframe) VALUES (?, ?, ?)';
+    db.run(sql, [title, description, iframe], function(err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.status(201).json({ id: this.lastID, title, description, iframe });
+        }
+    });
 };
 
 exports.getSongById = function(req, res) {
-    db.Song.findById(req.params.songId)
-    .then(function(foundSong) {
-        res.json(foundSong);
-    })
-    .catch(function(err) {
-        res.send(err);
+    const songId = req.params.songId;
+    const sql = 'SELECT * FROM songs WHERE id = ?';
+    db.get(sql, [songId], (err, row) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else if (!row) {
+            res.status(404).json({ message: 'Song not found' });
+        } else {
+            res.json(row);
+        }
     });
 };
 
 exports.updateSong = function(req, res) {
-    db.Song.findByIdAndUpdate(req.params.songId, req.body, { new: true })
-    .then(function(updatedSong) {
-        res.json(updatedSong);
-    })
-    .catch(function(err) {
-        res.send(err);
+    const songId = req.params.songId;
+    const { title, description, iframe } = req.body;
+    const sql = 'UPDATE songs SET title = ?, description = ?, iframe = ? WHERE id = ?';
+    db.run(sql, [title, description, iframe, songId], function(err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else if (this.changes === 0) {
+            res.status(404).json({ message: 'Song not found' });
+        } else {
+            res.json({ message: 'Song updated successfully' });
+        }
     });
 };
 
 exports.deleteSong = function(req, res) {
-    db.Song.deleteOne({ _id: req.params.songId })
-    .then(function(result) {
-        if (result.deletedCount >  0) {
-            res.json({ message: "The song has been deleted" });
+    const songId = req.params.songId;
+    const sql = 'DELETE FROM songs WHERE id = ?';
+    db.run(sql, [songId], function(err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else if (this.changes === 0) {
+            res.status(404).json({ message: 'Song not found' });
         } else {
-            res.status(404).json({ message: "Song not found" });
+            res.json({ message: 'Song deleted successfully' });
         }
-    })
-    .catch(function(err) {
-        res.send(err);
     });
 };
-
-
-module.exports = exports;

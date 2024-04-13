@@ -2,19 +2,14 @@ const express = require('express');
 const router = express.Router();
 const songsController = require('../helpers/songsController');
 
-// Get all songs
-router.get('/', songsController.getSongs);
+router.route('/')
+    .get(songsController.getSongs) // Get all songs
+    .post(songsController.addSong);
 
-// Add a new song
-router.post('/', songsController.addSong);
 
-// Get a song by ID
-router.get('/:songId', songsController.getSongById);
-
-// Update a song by ID (Optional, remove if not needed)
-router.put('/:songId', songsController.updateSong);
-
-// Delete a song by ID (Optional, remove if not needed)
-router.delete('/:songId', songsController.deleteSong);
+router.route('/:songId')
+    .get(songsController.getSongById) // Get a song by ID
+    .put(songsController.updateSong) // Update a song by ID (Optional, remove if not needed)
+    .delete(songsController.deleteSong); // Delete a song by ID (Optional, remove if not needed)
 
 module.exports = router;

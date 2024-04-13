@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const songsController = require('../helpers/songsController');
+const authenticateToken = require('../middleware/authMiddleware');
 
 router.route('/')
     .get(songsController.getSongs) // Get all songs
-    .post(songsController.addSong);
-
+    .post(authenticateToken, songsController.addSong); // Add authentication middleware
 
 router.route('/:songId')
     .get(songsController.getSongById) // Get a song by ID
-    .put(songsController.updateSong) // Update a song by ID (Optional, remove if not needed)
-    .delete(songsController.deleteSong); // Delete a song by ID (Optional, remove if not needed)
+    .put(authenticateToken, songsController.updateSong) // Add authentication middleware
+    .delete(authenticateToken, songsController.deleteSong); // Add authentication middleware
 
 module.exports = router;

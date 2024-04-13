@@ -1,43 +1,58 @@
 const db = require('./db'); // Import the database connection
 
-// Function to create the song table if it doesn't exist
-function createSongTable() {
+// Function to create or update the song table
+function createOrUpdateSongTable() {
     const sqlCreate = `
         CREATE TABLE IF NOT EXISTS songs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             description TEXT,
             dateAdded DATE DEFAULT CURRENT_DATE,
-            iframe TEXT NOT NULL,
-            link TEXT
+            iframe TEXT NOT NULL
         )
     `;
+
     db.run(sqlCreate, (err) => {
         if (err) {
             console.error("Error creating table:", err.message);
         } else {
-            console.log("Table created or already exists with updated schema.");
-            updateSongTable(); // Call to ensure the table is updated
+            console.log("Table created or already exists.");
+            addColumnIfNotExists('link', 'TEXT');
+            addColumnIfNotExists('userId', 'INTEGER', 'REFERENCES users (id)');
         }
     });
 }
 
-// Function to update the song table to include a link column if not exists
-function updateSongTable() {
-    const sqlAlter = `
-        ALTER TABLE songs
-        ADD COLUMN link TEXT;
+// Function to add a column to the song table if it doesn't exist
+function addColumnIfNotExists(columnName, columnType, additionalConstraints = '') {
+    const sqlCheckColumn = `
+        PRAGMA table_info(songs);
     `;
 
-    db.run(sqlAlter, (err) => {
-        if (err && err.message.includes("duplicate column name")) {
-            console.log("Link column already exists.");
-        } else if (err) {
-            console.error("Error updating table:", err.message);
+    db.all(sqlCheckColumn, (err, columns) => {
+        if (err) {
+            console.error(`Error checking ${columnName} column:`, err.message);
         } else {
-            console.log("Table updated successfully to include 'link' column.");
+            const columnExists = columns.some(column => column.name === columnName);
+
+            if (!columnExists) {
+                const sqlAddColumn = `
+                    ALTER TABLE songs
+                    ADD COLUMN ${columnName} ${columnType} ${additionalConstraints};
+                `;
+
+                db.run(sqlAddColumn, (err) => {
+                    if (err) {
+                        console.error(`Error adding ${columnName} column:`, err.message);
+                    } else {
+                        console.log(`${columnName} column added successfully.`);
+                    }
+                });
+            } else {
+                console.log(`${columnName} column already exists.`);
+            }
         }
     });
 }
 
-createSongTable(); // Create or update the table when the model is loaded
+createOrUpdateSongTable(); // Create or update the song table when the model is loaded

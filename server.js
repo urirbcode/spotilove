@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const db = require('./models/db'); // Import the database connection
 
+
 // This function checks if the 'songs' table exists in the database, and creates it if it doesn't
 async function createTableOnStart() {
     // Check if the 'songs' table exists
@@ -36,8 +37,9 @@ async function createTableOnStart() {
 // Create the 'songs' table on server start
 createTableOnStart();
 
-// Import the routes for the '/api/songs' endpoint
+// Import the routes for the '/api/songs' endpoint, and other endpoints
 const songRoutes = require('./routes/songRoutes')
+const userRoutes = require('./routes/userRoutes');
 
 // Serve static files (e.g., images, CSS, JavaScript) from the 'public' and 'views' directories
 app.use(express.static(__dirname + '/public'))
@@ -54,6 +56,11 @@ app.get('/', function(req, res){
 
 // Use the 'songRoutes' for the '/api/songs' endpoint
 app.use('/api/songs', songRoutes)
+
+
+// Use the 'userRoutes' for the '/api/users' endpoint
+app.use('/api/users', userRoutes);
+
 
 // Start the server on the specified port (or 3000 if not specified)
 const PORT = process.env.PORT || 3000;

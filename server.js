@@ -71,7 +71,8 @@ app.use('/api/songs', songRoutes)
 // start our server
 // for app.listen we need to provide a port for the app to listen to it. 3000 is the standard local port
 // the second parameter is a callback function
-app.listen(3000, function(){
-    console.log("APP IS RUNNING ON PORT 3000")
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`App is running on port ${PORT}`);
+});
 

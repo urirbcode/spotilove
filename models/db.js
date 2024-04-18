@@ -1,5 +1,8 @@
-const sqlite3 = require('sqlite3').verbose(); // Assuming you installed 'sqlite3'
+import { createClient } from '@supabase/supabase-js'
 
-const db = new sqlite3.Database('./database.db'); // Creates/connects to database.db
+const supabaseUrl = 'https://lcdwcwtzsvegwnrzkaif.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
 
-module.exports = db; // Export the database connection
+const db = createClient(supabaseUrl, supabaseKey);
+
+module.exports = db;

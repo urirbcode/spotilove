@@ -4,39 +4,6 @@ const bodyParser = require('body-parser');
 const db = require('./models/db'); // Import the database connection
 
 
-// This function checks if the 'songs' table exists in the database, and creates it if it doesn't
-async function createTableOnStart() {
-    // Check if the 'songs' table exists
-    const tableExists = await new Promise((resolve, reject) => {
-        db.get('SELECT name FROM sqlite_master WHERE type="table" AND name="songs"', (err, row) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(row !== undefined); // True if table exists, false otherwise
-            }
-        });
-    });
-
-    // If the table doesn't exist, create it
-    if (!tableExists) {
-        await db.run(`
-            CREATE TABLE songs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT NOT NULL,
-                description TEXT,
-                dateAdded DATE DEFAULT CURRENT_DATE,
-                iframe TEXT NOT NULL
-            )
-        `);
-        console.log('Song table created.');
-    } else {
-        console.log('Song table already exists. Skipping creation.');
-    }
-}
-
-// Create the 'songs' table on server start
-createTableOnStart();
-
 // Import the routes for the '/api/songs' endpoint, and other endpoints
 const songRoutes = require('./routes/songRoutes')
 const userRoutes = require('./routes/userRoutes');

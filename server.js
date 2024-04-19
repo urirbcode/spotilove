@@ -1,35 +1,40 @@
 const express = require('express');
-const app = express();
+const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('./models/db'); // Import the database connection
+const db = require('./models/db'); // Ensure this points to the correct location of your DB module
 
+const app = express();
 
-// Import the routes for the '/api/songs' endpoint, and other endpoints
-const songRoutes = require('./routes/songRoutes')
+// Import the routes for the API endpoints
+const songRoutes = require('./routes/songRoutes');
 const userRoutes = require('./routes/userRoutes');
 
-// Serve static files (e.g., images, CSS, JavaScript) from the 'public' and 'views' directories
-app.use(express.static(__dirname + '/public'))
-app.use(express.static(__dirname + '/views'))
+// Serve static files from 'public' and 'views' directories
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 // Parse incoming requests with JSON payloads
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve the 'index.html' file when the root URL is requested
-app.get('/', function(req, res){
-    res.sendFile("index.html")
+// Define routes for HTML pages to allow for cleaner URLs
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Use the 'songRoutes' for the '/api/songs' endpoint
-app.use('/api/songs', songRoutes)
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'register.html'));
+});
 
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'login.html'));
+});
 
-// Use the 'userRoutes' for the '/api/users' endpoint
+// Use the API routes
+app.use('/api/songs', songRoutes);
 app.use('/api/users', userRoutes);
 
-
-// Start the server on the specified port (or 3000 if not specified)
+// Start the server on the specified port or default to 3000
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`App is running on port ${PORT}`);

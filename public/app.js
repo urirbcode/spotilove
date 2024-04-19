@@ -120,78 +120,23 @@ function generateSpotifyIframe(url) {
 const loginButton = document.getElementById('loginButton');
 const registerButton = document.getElementById('registerButton');
 const logoutButton = document.getElementById('logoutButton');
-const loginModal = document.getElementById('loginModal');
-const registerModal = document.getElementById('registerModal');
-const loginForm = document.getElementById('loginForm');
-const registerForm = document.getElementById('registerForm');
 
-loginButton.onclick = function() {
-  loginModal.style.display = 'block';
-};
+loginButton.addEventListener('click', function() {
+  window.location.href = '/login';
+});
 
-registerButton.onclick = function() {
-  registerModal.style.display = 'block';
-};
+registerButton.addEventListener('click', function() {
+  window.location.href = '/register';
+});
 
-logoutButton.onclick = async function() {
+logoutButton.addEventListener('click', async function() {
   localStorage.removeItem('token');
   loginButton.style.display = 'inline-block';
   registerButton.style.display = 'inline-block';
   logoutButton.style.display = 'none';
-  addSongButton.style.display = 'none';
+  document.getElementById('addSongButton').style.display = 'none';
   fetchAndUpdateSongs();
-};
-
-loginForm.addEventListener('submit', async function(event) {
-  event.preventDefault();
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
-
-  try {
-    const response = await axios.post('/api/users/login', { email, password });
-    const token = response.data.token;
-    localStorage.setItem('token', token);
-    loginModal.style.display = 'none';
-    loginButton.style.display = 'none';
-    registerButton.style.display = 'none';
-    logoutButton.style.display = 'inline-block';
-    addSongButton.style.display = 'block';
-    fetchAndUpdateSongs();
-  } catch (error) {
-    console.error('Error logging in:', error);
-    alert('Invalid email or password');
-  }
 });
-
-registerForm.addEventListener('submit', async function(event) {
-  event.preventDefault();
-  const email = document.getElementById('registerEmail').value;
-  const password = document.getElementById('registerPassword').value;
-
-  try {
-    await axios.post('/api/users/register', { email, password });
-    registerModal.style.display = 'none';
-    alert('Registration successful. Please log in.');
-  } catch (error) {
-    console.error('Error registering:', error);
-    alert('Registration failed. Please try again.');
-  }
-});
-
-// Close modals when clicking outside or on the close button
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-      event.target.style.display = 'none';
-    }
-  };
-  
-  const closeButtons = document.querySelectorAll('.close-button');
-  closeButtons.forEach(function(button) {
-    button.onclick = function() {
-      const modalId = this.getAttribute('data-modal');
-      document.getElementById(modalId).style.display = 'none';
-    };
-  });
 
 // Check if the user is logged in on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -200,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function() {
     loginButton.style.display = 'none';
     registerButton.style.display = 'none';
     logoutButton.style.display = 'inline-block';
-    addSongButton.style.display = 'block';
+    document.getElementById('addSongButton').style.display = 'block';
   } else {
     loginButton.style.display = 'inline-block';
     registerButton.style.display = 'inline-block';
     logoutButton.style.display = 'none';
-    addSongButton.style.display = 'none';
+    document.getElementById('addSongButton').style.display = 'none';
   }
   fetchAndUpdateSongs();
 });

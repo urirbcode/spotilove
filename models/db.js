@@ -1,5 +1,12 @@
-const sqlite3 = require('sqlite3').verbose(); // Assuming you installed 'sqlite3'
+const { createClient } = require('@supabase/supabase-js');
 
-const db = new sqlite3.Database('./database.db'); // Creates/connects to database.db
+const supabaseUrl = 'https://lcdwcwtzsvegwnrzkaif.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY;
 
-module.exports = db; // Export the database connection
+if (!supabaseKey) {
+  throw new Error('SUPABASE_KEY environment variable is not set');
+}
+
+const db = createClient(supabaseUrl, supabaseKey);
+
+module.exports = db;

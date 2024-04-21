@@ -14,5 +14,4 @@ __pycache__
 .idea
 .vscode
 node_modules
-
-git2txt/
+git2txt

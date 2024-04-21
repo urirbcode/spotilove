@@ -310,3 +310,75 @@ button[type="submit"]:hover {
     font-style: italic;
   }
   
+  #userButtons {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  #userButtons button {
+    background-color: #1DB954;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #userButtons button:hover {
+    background-color: #1ed760;
+  }
+
+  .modal-title {
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 800;
+    color: #121212;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .modal-button {
+    width: 100%;
+    background-color: #1DB954;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: 'PlusJakartaSans', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .modal-button:hover {
+    background-color: #45a049;
+  }
+  
+  .modal-content {
+    /* ... (previous styles remain the same) */
+    padding: 40px;
+  }
+  
+  .form-group {
+    margin-bottom: 30px;
+  }
